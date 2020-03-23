@@ -40,7 +40,7 @@ class WrBashBuilder extends BashWrapperBuilder {
         super(bean, new WrFileCopyStrategy(bean, remoteBinDir))
     }
 
-    protected boolean alwaysTryToUnstage() {
+    protected boolean shouldUnstageOutputs() {
         return true
     }
 
