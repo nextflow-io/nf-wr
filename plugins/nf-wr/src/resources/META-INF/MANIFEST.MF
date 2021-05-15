@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Plugin-Id: nf-wr
+Plugin-Version: 1.1.0
+Plugin-Class: nextflow.wr.executor.WrExecutor
+Plugin-Provider: nextflow
+Plugin-Requires: >=21.04.0
+Plugin-Dependencies: nf-amazon

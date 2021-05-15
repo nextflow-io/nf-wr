@@ -16,17 +16,16 @@
 
 package nextflow.wr.client
 
-import java.io.File
-import java.nio.file.Paths
-import java.nio.file.Path
 import javax.net.ssl.HttpsURLConnection
+import java.nio.file.Path
+import java.nio.file.Paths
 
-import nextflow.processor.TaskRun
+import nextflow.file.FileHelper
 import nextflow.processor.TaskBean
-import nextflow.processor.TaskProcessor
 import nextflow.processor.TaskConfig
+import nextflow.processor.TaskProcessor
+import nextflow.processor.TaskRun
 import nextflow.wr.executor.WrFileCopyStrategy
-
 import spock.lang.Specification
 /**
  *
@@ -56,6 +55,10 @@ class WrRestApiTest extends Specification {
         RAkgePpl2m7K9RfOJrlMCAgz
         -----END CERTIFICATE-----
         '''.stripIndent().rightTrim()
+
+    def setupSpec() {
+        FileHelper.getOrInstallProvider(com.upplication.s3fs.S3FileSystemProvider)
+    }
 
     def 'should create a client' () {
         given:
