@@ -19,12 +19,8 @@ package nextflow.wr.executor
 import java.nio.file.Files
 import java.nio.file.Path
 
-import nextflow.Global
-import nextflow.Session
 import nextflow.processor.TaskBean
-import nextflow.file.FilePorter
 import spock.lang.Specification
-
 /**
  *
  * @author Sendu Bala <sb10@sanger.ac.uk>
