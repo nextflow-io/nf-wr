@@ -193,6 +193,8 @@ class WrTaskHandlerTest extends Specification {
         task.isContainerNative() >> false
         task.getProcessor() >> processor
         task.getScratch() >> false
+        task.isSecretNative() >> false
+        and:
         processor.getSession() >> session
         processor.getConfig() >> config
         session.getWorkDir() >> folder

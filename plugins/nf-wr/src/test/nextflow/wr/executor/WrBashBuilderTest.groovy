@@ -75,8 +75,11 @@ class WrBashBuilderTest extends Specification {
         then:
         binding.touch_file == 'touch .mnt/bucket/work/.command.begin'
         binding.unstage_outputs == '''\
-                  cp -fRL test.bam .mnt/bucket/work/ || true
-                  cp -fRL test.bai .mnt/bucket/work/ || true
+                   IFS=$'\\n'
+                   for name in $(eval "ls -1d test.bam test.bai" | sort | uniq); do
+                       cp -fRL $name .mnt/bucket/work/ || true
+                   done
+                   unset IFS
                   '''.stripIndent().rightTrim()
     }
 
