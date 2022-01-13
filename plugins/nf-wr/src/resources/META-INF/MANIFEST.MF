@@ -3,5 +3,4 @@ Plugin-Id: nf-wr
 Plugin-Version: 1.2.0
 Plugin-Class: nextflow.wr.WrPlugin
 Plugin-Provider: nextflow
-Plugin-Requires: >=21.08.0-edge
-Plugin-Dependencies: nf-amazon
+Plugin-Requires: >=21.12.1-edge

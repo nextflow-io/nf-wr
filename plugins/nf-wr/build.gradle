@@ -38,11 +38,7 @@ dependencies {
     compileOnly 'org.slf4j:slf4j-api:1.7.10'
     compileOnly 'org.pf4j:pf4j:3.4.1'
     compileOnly 'io.nextflow:nextflow:21.12.1-edge'
-    compile ('io.nextflow:nxf-s3fs:1.1.0') {
-        exclude group: 'org.slf4j', module: 'slf4j-api'
-        exclude group: 'com.google.guava', module: 'guava'
-    }
-
+    compile ('io.nextflow:nf-amazon:1.4.0')
     // test configuration
     testImplementation "org.codehaus.groovy:groovy:3.0.9"
     testImplementation "org.codehaus.groovy:groovy-nio:3.0.9"
