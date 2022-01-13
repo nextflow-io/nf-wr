@@ -10,4 +10,3 @@
 rootProject.name = 'nf-wr-plugin'
 include 'plugins'
 include 'plugins:nf-wr'
-includeBuild '../nextflow'
