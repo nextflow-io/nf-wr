@@ -41,7 +41,9 @@ jobs:
         run: ./gradlew assemble
 
       - name: Tests
-        run: ./gradlew check
+        run: |
+          export NXF_PLUGINS_DIR=$PWD/plugins
+          ./gradlew check
         env:
           GRADLE_OPTS: '-Dorg.gradle.daemon=false'
 
