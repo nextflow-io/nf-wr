@@ -34,7 +34,7 @@ import spock.lang.Specification
  */
 class WrRestApiTest extends Specification {
 
-    private final certData = '''
+    private final static String certData = '''
         -----BEGIN CERTIFICATE-----
         MIIDDjCCAfagAwIBAgIQfzLCXb/maNHYDLn5PsABGzANBgkqhkiG9w0BAQsFADAV
         MRMwEQYDVQQKEwp3ciBtYW5hZ2VyMB4XDTE5MDQwNDEzNDIwNloXDTIwMDQwMzEz
