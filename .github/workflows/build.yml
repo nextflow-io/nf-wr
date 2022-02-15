@@ -43,7 +43,7 @@ jobs:
       - name: Tests
         run: |
           export NXF_PLUGINS_DIR=$PWD/plugins
-          ./gradlew check --debug
+          ./gradlew check
         env:
           GRADLE_OPTS: '-Dorg.gradle.daemon=false'
 
