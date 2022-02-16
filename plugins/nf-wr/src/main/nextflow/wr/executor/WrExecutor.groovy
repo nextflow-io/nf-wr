@@ -16,24 +16,22 @@
 
 package nextflow.wr.executor
 
-import groovy.transform.CompileStatic
-import groovy.util.logging.Slf4j
-import java.nio.file.Paths
 import java.nio.file.Path
+import java.nio.file.Paths
+
 import com.upplication.s3fs.S3Path
+import groovy.transform.CompileStatic
 import groovy.transform.PackageScope
-
-import nextflow.wr.client.WrRestApi
-import nextflow.wr.processor.WrMonitor
-
+import groovy.util.logging.Slf4j
 import nextflow.executor.Executor
+import nextflow.extension.FilesEx
 import nextflow.processor.TaskHandler
 import nextflow.processor.TaskMonitor
 import nextflow.processor.TaskRun
-import nextflow.exception.AbortOperationException
 import nextflow.util.ServiceName
-import nextflow.extension.FilesEx
-
+import nextflow.wr.client.WrRestApi
+import nextflow.wr.processor.WrMonitor
+import org.pf4j.ExtensionPoint
 /**
  * Executor that schedules jobs using wr as a backend, avoiding storage of
  * state on disk.
@@ -46,7 +44,7 @@ import nextflow.extension.FilesEx
 @Slf4j
 @CompileStatic
 @ServiceName('wr')
-class WrExecutor extends Executor {
+class WrExecutor extends Executor implements ExtensionPoint {
 
     static private WrRestApi client
     static private String managerDir

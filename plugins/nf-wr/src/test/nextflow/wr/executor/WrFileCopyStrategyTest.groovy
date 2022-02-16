@@ -276,9 +276,11 @@ class WrFileCopyStrategyTest extends Specification {
         def script = strategy.getUnstageOutputFilesScript(outputs, target)
         then:
         script == '''
-                mkdir -p /target/work\\ dir
-                cp -fRL simple.txt /target/work\\ dir || true
-                mkdir -p /target/work\\ dir/my/path && cp -fRL my/path/file.bam /target/work\\ dir/my/path || true
+                IFS=$'\\n'
+                for name in $(eval "ls -1d simple.txt my/path/file.bam" | sort | uniq); do
+                    cp -fRL $name /target/work\\ dir || true
+                done
+                unset IFS
                 '''
                 .stripIndent().trim()
     }
@@ -295,9 +297,11 @@ class WrFileCopyStrategyTest extends Specification {
         def script = strategy.getUnstageOutputFilesScript(outputs, storeDir)
         then:
         script == '''
-                mkdir -p /target/store
-                mv -f simple.txt /target/store || true
-                mkdir -p /target/store/my/path && mv -f my/path/file.bam /target/store/my/path || true
+                IFS=$'\\n'
+                for name in $(eval "ls -1d simple.txt my/path/file.bam" | sort | uniq); do
+                    mv -f $name /target/store || true
+                done
+                unset IFS
                 '''
                 .stripIndent().trim()
     }
@@ -313,9 +317,11 @@ class WrFileCopyStrategyTest extends Specification {
         def script = strategy.getUnstageOutputFilesScript(outputs,target)
         then:
         script == '''
-                mkdir -p /target/work\\'s
-                rsync -rRl simple.txt /target/work\\'s || true
-                rsync -rRl my/path/file.bam /target/work\\'s || true
+                IFS=$'\\n'
+                for name in $(eval "ls -1d simple.txt my/path/file.bam" | sort | uniq); do
+                    rsync -rRl $name /target/work\\'s || true
+                done
+                unset IFS
                 '''
                 .stripIndent().trim()
     }
@@ -334,25 +340,21 @@ class WrFileCopyStrategyTest extends Specification {
         def task = new TaskBean()
         task.workDir = Paths.get('bucket/work')
         def target = Mock(Path)
-        def strategy = Spy(WrFileCopyStrategy, constructorArgs: [task, null])
+        WrFileCopyStrategy strategy = Spy(WrFileCopyStrategy, constructorArgs: [task, null])
 
         when:
         def script = strategy.getUnstageOutputFilesScript(outputs, target)
         then:
-        3 * strategy.getPathScheme(target) >> 's3'
-        2 * target.getFileName() >> Paths.get('/foo/bar')
+//        3 * strategy.getPathScheme(target) >> 's3'
+//        2 * target.getFileName() >> Paths.get('/foo/bar')
         script == '''
-                mv -f simple.txt .mntbucket/work/foo/bar || true
-                mkdir -p .mntbucket/work/foo/bar/my/path && mv -f my/path/file.bam .mntbucket/work/foo/bar/my/path || true
+                IFS=$'\\n'
+                for name in $(eval "ls -1d simple.txt my/path/file.bam" | sort | uniq); do
+                    mv -f $name Mock\\ for\\ type\\ \\'Path\\'\\ named\\ \\'target\\' || true
+                done
+                unset IFS
                 '''
                 .stripIndent().trim()
-    }
-
-    def 'should return staging dir' () {
-        given:
-        def strategy = new WrFileCopyStrategy(workDir: Paths.get('/work/foo/bar'))
-        expect:
-        strategy.getStagingDir() == Paths.get('/work/stage')
     }
 
     def 'should return input mount path' () {

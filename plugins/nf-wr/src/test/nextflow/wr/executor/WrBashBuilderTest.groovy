@@ -18,13 +18,10 @@ package nextflow.wr.executor
 
 import java.nio.file.Files
 import java.nio.file.Path
+import nextflow.wr.s3.S3PathFactory
 
-import nextflow.Global
-import nextflow.Session
 import nextflow.processor.TaskBean
-import nextflow.file.FilePorter
 import spock.lang.Specification
-
 /**
  *
  * @author Sendu Bala <sb10@sanger.ac.uk>
@@ -78,15 +75,18 @@ class WrBashBuilderTest extends Specification {
         then:
         binding.touch_file == 'touch .mnt/bucket/work/.command.begin'
         binding.unstage_outputs == '''\
-                  cp -fRL test.bam .mnt/bucket/work/ || true
-                  cp -fRL test.bai .mnt/bucket/work/ || true
+                   IFS=$'\\n'
+                   for name in $(eval "ls -1d test.bam test.bai" | sort | uniq); do
+                       cp -fRL $name .mnt/bucket/work/ || true
+                   done
+                   unset IFS
                   '''.stripIndent().rightTrim()
     }
 
     def 'test bash wrapper with bin in S3' () {
         given:
-        def folder = 's3://bucket/work' as Path
-        def binDir = 's3://bucket/tmp/bin' as Path
+        def folder = S3PathFactory.parse('s3://bucket/work')
+        def binDir = S3PathFactory.parse('s3://bucket/tmp/bin')
         def bash = new WrBashBuilder([
                 name: 'Hello 3',
                 workDir: folder,

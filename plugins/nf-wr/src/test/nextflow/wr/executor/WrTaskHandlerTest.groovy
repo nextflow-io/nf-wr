@@ -16,15 +16,13 @@
 
 package nextflow.wr.executor
 
-import java.nio.file.Path
-import java.nio.file.Paths
 import java.nio.file.Files
 
 import nextflow.Session
-import nextflow.processor.TaskConfig
-import nextflow.processor.TaskRun
-import nextflow.processor.TaskProcessor
 import nextflow.processor.BatchContext
+import nextflow.processor.TaskConfig
+import nextflow.processor.TaskProcessor
+import nextflow.processor.TaskRun
 import nextflow.wr.client.WrRestApi
 import spock.lang.Specification
 /**
@@ -175,9 +173,11 @@ class WrTaskHandlerTest extends Specification {
             workDir: folder,
             script: 'echo Hello world!'
         ] as TaskRun)
-        def config = Mock(TaskConfig)
+        def config = GroovyMock(TaskConfig)
         task.config = config
-        def processor = Mock(TaskProcessor)
+        def processor = Mock(TaskProcessor)  {
+            getExecutor() >> executor
+        }
         def session = Mock(Session)
         def client = Mock(WrRestApi)
         def handler = new WrTaskHandler(task, executor)
@@ -192,6 +192,9 @@ class WrTaskHandlerTest extends Specification {
         task.getContainerConfig() >> null
         task.isContainerNative() >> false
         task.getProcessor() >> processor
+        task.getScratch() >> false
+        task.isSecretNative() >> false
+        and:
         processor.getSession() >> session
         processor.getConfig() >> config
         session.getWorkDir() >> folder
