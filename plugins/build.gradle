@@ -22,7 +22,7 @@ String now() {
 
 List<String> allPlugins() {
     def plugins = []
-    new File(rootProject.rootDir, 'plugins') .eachDir { if(it.name.startsWith('xpack-')) plugins.add(it.name) }
+    new File(rootProject.rootDir, 'plugins') .eachDir { if(it.name.startsWith('nf-')) plugins.add(it.name) }
     return plugins
 }
 

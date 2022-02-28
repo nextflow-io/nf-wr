@@ -37,12 +37,12 @@ sourceSets {
 dependencies {
     compileOnly 'org.slf4j:slf4j-api:1.7.10'
     compileOnly 'org.pf4j:pf4j:3.4.1'
-    compileOnly 'io.nextflow:nextflow:21.12.1-edge'
-    compile ('io.nextflow:nf-amazon:1.4.0')
+    compileOnly 'io.nextflow:nextflow:22.02.0-edge'
+    compile ('io.nextflow:nf-amazon:1.5.2')
     // test configuration
     testImplementation "org.codehaus.groovy:groovy:3.0.9"
     testImplementation "org.codehaus.groovy:groovy-nio:3.0.9"
-    testImplementation 'io.nextflow:nextflow:21.12.1-edge'
+    testImplementation 'io.nextflow:nextflow:22.02.0-edge'
     testImplementation ("org.codehaus.groovy:groovy-test:3.0.9") { exclude group: 'org.codehaus.groovy' }
     testImplementation ("cglib:cglib-nodep:3.3.0")
     testImplementation ("org.objenesis:objenesis:3.1")
